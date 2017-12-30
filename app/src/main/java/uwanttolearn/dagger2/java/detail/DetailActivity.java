@@ -16,12 +16,15 @@ import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import uwanttolearn.dagger2.R;
 import uwanttolearn.dagger2.java.app.App;
 import uwanttolearn.dagger2.java.detail.adapter.DetailAdapter;
+import uwanttolearn.dagger2.java.detail.di.DetailModule;
 import uwanttolearn.dagger2.java.repositories.github.GitHubRepository;
 
 /**
@@ -56,7 +59,8 @@ public class DetailActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private RecyclerView.LayoutManager layoutManager;
     private DetailAdapter detailAdapter;
-    private GitHubRepository gitHubRepository;
+    @Inject
+    GitHubRepository gitHubRepository;
     private Disposable disposable;
 
 
@@ -64,10 +68,12 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+        App.getApp().getAppComponent().plus(new DetailModule(this)).inject(this);
+
         String username = getIntent().getStringExtra(Intent.EXTRA_TEXT);
         String imageUrl = getIntent().getStringExtra("imageUrl");
         validate(username, imageUrl);
-        gitHubRepository = App.getApp().getGitHubRepository();
+
 
         initViews();
         initRecyclerView();

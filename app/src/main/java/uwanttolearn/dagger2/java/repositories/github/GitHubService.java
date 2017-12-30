@@ -11,7 +11,7 @@ import uwanttolearn.dagger2.java.pojos.GitHubUserRepository;
 /**
  * Created by waleed on 22/07/2017.
  */
-interface GitHubService {
+public interface GitHubService {
 
 
     @GET("/users")

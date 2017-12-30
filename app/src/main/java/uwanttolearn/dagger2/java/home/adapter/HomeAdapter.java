@@ -4,6 +4,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -22,10 +24,14 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeViewHolder> {
     private LayoutInflater layoutInflater;
     private Subject<GitHubUser> clickSubject;
     private List<GitHubUser> gitHubUsers;
+    private Glide glide;
 
-    public HomeAdapter(List<GitHubUser> gitHubUsers) {
+    public HomeAdapter(List<GitHubUser> gitHubUsers, Glide glide) {
         if (gitHubUsers == null)
             throw new IllegalArgumentException("List<GitHubUser> required");
+        if (glide == null)
+            throw new IllegalArgumentException("Glide required");
+        this.glide = glide;
         this.gitHubUsers = gitHubUsers;
         this.clickSubject = PublishSubject.create();
     }
@@ -35,7 +41,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeViewHolder> {
     public HomeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (layoutInflater == null)
             layoutInflater = LayoutInflater.from(parent.getContext());
-        return new HomeViewHolder(layoutInflater.inflate(R.layout.row_home, parent, false), clickSubject);
+        return new HomeViewHolder(layoutInflater.inflate(R.layout.row_home, parent, false), clickSubject, glide);
     }
 
     @Override
