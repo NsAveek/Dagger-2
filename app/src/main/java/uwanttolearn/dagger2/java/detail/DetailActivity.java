@@ -24,6 +24,7 @@ import io.reactivex.schedulers.Schedulers;
 import uwanttolearn.dagger2.R;
 import uwanttolearn.dagger2.java.app.App;
 import uwanttolearn.dagger2.java.detail.adapter.DetailAdapter;
+import uwanttolearn.dagger2.java.detail.di.DetailComponent;
 import uwanttolearn.dagger2.java.detail.di.DetailModule;
 import uwanttolearn.dagger2.java.repositories.github.GitHubRepository;
 
@@ -33,6 +34,8 @@ import uwanttolearn.dagger2.java.repositories.github.GitHubRepository;
 
 public class DetailActivity extends AppCompatActivity {
 
+
+    public DetailComponent detailComponent;
 
     public static void start(Context context, String userName, String imageUrl) {
         validate(userName, imageUrl);
@@ -66,9 +69,12 @@ public class DetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        detailComponent = App.getApp().getAppComponent().plus(new DetailModule(this));
+        detailComponent.inject(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        App.getApp().getAppComponent().plus(new DetailModule(this)).inject(this);
+
 
         String username = getIntent().getStringExtra(Intent.EXTRA_TEXT);
         String imageUrl = getIntent().getStringExtra("imageUrl");

@@ -10,6 +10,7 @@ import uwanttolearn.dagger2.java.home.HomeActivity
  */
 @Subcomponent(modules = arrayOf(HomeModule::class))
 interface HomeComponent {
+
     fun inject(activity: HomeActivity)
 
 }
