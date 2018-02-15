@@ -1,25 +1,40 @@
 package uwanttolearn.dagger2.java.app;
 
+import android.app.Activity;
 import android.app.Application;
 
+import javax.inject.Inject;
+
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasActivityInjector;
+import uwanttolearn.dagger2.java.app.di.DaggerAppComponent;
 import uwanttolearn.dagger2.java.repositories.github.GitHubRepository;
-import uwanttolearn.dagger2.java.repositories.github.GitHubServiceGenerator;
 
 /**
  * Created by waleed on 22/07/2017.
  */
 
-public class App extends Application {
+public class App extends Application implements HasActivityInjector {
 
     private static App app;
 
-    private GitHubRepository gitHubRepository;
+    @Inject
+    GitHubRepository gitHubRepository;
+
+    @Inject
+    DispatchingAndroidInjector<Activity> dispatchingAndroidInjector;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        DaggerAppComponent
+                .builder()
+                .app(this)
+                .url("https://api.github.com")
+                .build()
+                .inject(this);
         app = this;
-        gitHubRepository = GitHubRepository.getInstance(GitHubServiceGenerator.gitHubService("https://api.github.com"));
     }
 
 
@@ -29,5 +44,10 @@ public class App extends Application {
 
     public GitHubRepository getGitHubRepository() {
         return gitHubRepository;
+    }
+
+    @Override
+    public AndroidInjector<Activity> activityInjector() {
+        return dispatchingAndroidInjector;
     }
 }

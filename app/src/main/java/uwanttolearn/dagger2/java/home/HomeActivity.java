@@ -1,15 +1,15 @@
 package uwanttolearn.dagger2.java.home;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import javax.inject.Inject;
 
+import dagger.android.AndroidInjection;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -23,14 +23,19 @@ public class HomeActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
-    private GitHubRepository gitHubRepository;
-    private HomeAdapter homeAdapter;
-    private RecyclerView.LayoutManager layoutManager;
+
+    GitHubRepository gitHubRepository;
+    @Inject
+    HomeAdapter homeAdapter;
+    @Inject
+    RecyclerView.LayoutManager layoutManager;
+
     private Disposable disposable;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
@@ -58,8 +63,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void initRecyclerView() {
-        layoutManager = new LinearLayoutManager(this);
-        homeAdapter = new HomeAdapter(new ArrayList<>());
+
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(homeAdapter);
     }
