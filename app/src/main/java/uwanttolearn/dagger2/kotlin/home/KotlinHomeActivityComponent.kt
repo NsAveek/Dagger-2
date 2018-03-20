@@ -12,15 +12,16 @@ import uwanttolearn.dagger2.java.repositories.github.GitHubRepository
  * Created by Aveek on 20/03/2018.
  */
 
-@Component( modules = arrayOf(KotlinHomeActivityModule::class))
+@Component(modules = arrayOf(KotlinHomeActivityModule::class))
 interface KotlinHomeActivityComponent {
 
-    fun getRecyclerView()   : RecyclerView
-    fun getProgressBar()    : ProgressBar
-    fun getGithubRepository()   : GitHubRepository
-    fun getHomeAdapter() : HomeAdapter
-    fun getLayoutManager() : RecyclerView.LayoutManager
-    fun getDisposable() : Disposable
-    fun getGlide()  :   Glide
+//    fun getRecyclerView(): RecyclerView
+//    fun getProgressBar(): ProgressBar
+//    fun getGithubRepository(): GitHubRepository
+//    fun getHomeAdapter(): HomeAdapter
+//    fun getLayoutManager(): RecyclerView.LayoutManager
+//    fun getDisposable(): Disposable
+//    fun getGlide(): Glide
 
+    fun inject(kotlinHomeActivity : KotlinHomeActivity)
 }
