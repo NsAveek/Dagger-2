@@ -40,7 +40,9 @@ public class HomeActivityModule {
     }
 
     @Provides
-    public FormatString formatString() {
+    public FormatString formatString(GitHubRepository gitHubRepository) {
         return new FormatString("Hello Guys");
     }
+
+
 }
