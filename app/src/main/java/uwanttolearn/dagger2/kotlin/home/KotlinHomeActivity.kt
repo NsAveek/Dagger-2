@@ -13,13 +13,13 @@ import javax.inject.Inject
 class KotlinHomeActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var gitHubRepository : GitHubRepository
+    lateinit var gitHubRepository: GitHubRepository
     @Inject
-    lateinit var homeAdapter : HomeAdapter
+    lateinit var homeAdapter: HomeAdapter
     @Inject
-    lateinit var layoutManager : RecyclerView.LayoutManager
+    lateinit var layoutManager: RecyclerView.LayoutManager
 
-//    lateinit var kotlinHomeActivityComponent: KotlinHomeActivityComponent
+    //    lateinit var kotlinHomeActivityComponent: KotlinHomeActivityComponent
     lateinit var kotlinHomeActivityModule: KotlinHomeActivityModule
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,14 +29,15 @@ class KotlinHomeActivity : AppCompatActivity() {
         initComponent()
     }
 
-//    fun initModule(){
+    //    fun initModule(){
 //        kotlinHomeActivityModule = KotlinHomeActivityModule(this, App.getApp().appComponent.glide)
 //    }
-    fun initComponent(){
+    fun initComponent() {
 //        kotlinHomeActivityComponent = DaggerKotlinHomeActivityComponent.builder().
 //                kotlinHomeActivityModule(KotlinHomeActivityModule(this)).build()
+        // TODO : Change the code to App Component Kotlin
         DaggerKotlinHomeActivityComponent.builder()
-                .kotlinHomeActivityModule(KotlinHomeActivityModule(this,App.getApp().appComponent.glide))
+                .kotlinHomeActivityModule(KotlinHomeActivityModule(this, App.getApp().appComponent.glide))
                 .build().inject(this)
     }
 
